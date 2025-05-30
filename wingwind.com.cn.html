@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WingWind | 创新无人机解决方案</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-dark: #0a192f;
+            --primary-light: #112240;
+            --accent: #00d9ff;
+            --accent-dark: #00a3cc;
+            --text-primary: #e6f1ff;
+            --text-secondary: #8892b0;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(17, 34, 64, 0.3) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(17, 34, 64, 0.3) 0%, transparent 20%);
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background-color: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .navbar.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--text-primary);
+            margin-left: 5px;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 5px 0;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        /* 语言切换 */
+        .lang-switcher {
+            margin-left: 30px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--text-secondary);
+            color: var(--text-secondary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            outline: none;
+        }
+        
+        .lang-btn.active {
+            background: var(--accent-dark);
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+        
+        .lang-btn:first-child {
+            border-radius: 20px 0 0 20px;
+            border-right: none;
+        }
+        
+        .lang-btn:last-child {
+            border-radius: 0 20px 20px 0;
+            border-left: none;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #020c1b 100%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+        
+        .hero h1 span {
+            color: var(--accent);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 35px;
+            background-color: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            margin-right: 15px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover {
+            background-color: rgba(0, 217, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 217, 255, 0.2);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-dark);
+            box-shadow: 0 10px 25px rgba(0, 217, 255, 0.3);
+        }
+        
+        .hero-drone {
+            position: absolute;
+            right: -50px;
+            bottom: -50px;
+            width: 700px;
+            height: 700px;
+            opacity: 0.15;
+            z-index: 1;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path d="M100,20 L120,60 L100,80 L80,60 Z" fill="none" stroke="%2300d9ff" stroke-width="2"/><circle cx="100" cy="100" r="40" fill="none" stroke="%2300d9ff" stroke-width="2"/><line x1="60" y1="100" x2="140" y1="100" stroke="%2300d9ff" stroke-width="2"/><line x1="100" y1="60" x2="100" y2="140" stroke="%2300d9ff" stroke-width="2"/></svg>') center no-repeat;
+            background-size: contain;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        /* 部分标题样式 */
+        .section {
+            padding: 120px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-header h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .section-header p {
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 20px auto 0;
+            font-size: 1.1rem;
+        }
+        
+        /* 产品部分 */
+        .products {
+            background-color: var(--primary-light);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .products:before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: rgba(17, 34, 64, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 217, 255, 0.3);
+        }
+        
+        .product-image {
+            height: 220px;
+            background: linear-gradient(45deg, #0a192f, #112240);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .product-image .drone-icon {
+            width: 180px;
+            height: 180px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path d="M100,30 L120,70 L100,90 L80,70 Z" fill="none" stroke="%2300d9ff" stroke-width="2"/><circle cx="100" cy="100" r="35" fill="none" stroke="%2300d9ff" stroke-width="2"/><line x1="65" y1="100" x2="135" y1="100" stroke="%2300d9ff" stroke-width="2"/><line x1="100" y1="65" x2="100" y2="135" stroke="%2300d9ff" stroke-width="2"/></svg>') center no-repeat;
+            background-size: contain;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        .product-card:hover .drone-icon {
+            transform: translateY(-10px);
+            opacity: 1;
+        }
+        
+        .product-content {
+            padding: 25px;
+        }
+        
+        .product-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        .product-content p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            min-height: 80px;
+        }
+        
+        /* 商业应用部分 */
+        .applications {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #07182e 100%);
+            position: relative;
+        }
+        
+        .app-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .app-tab {
+            padding: 12px 30px;
+            background-color: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--accent);
+            border-radius: 30px;
+            margin: 0 10px 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .app-tab.active, .app-tab:hover {
+            background-color: var(--accent);
+            color: var(--primary-dark);
+        }
+        
+        .app-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .app-image {
+            flex: 1;
+            height: 400px;
+            background: linear-gradient(45deg, #0a192f, #112240);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .app-image:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, 
+                    transparent 48%, 
+                    rgba(0, 217, 255, 0.1) 50%, 
+                    transparent 52%),
+                linear-gradient(-45deg, 
+                    transparent 48%, 
+                    rgba(0, 217, 255, 0.1) 50%, 
+                    transparent 52%);
+            background-size: 20px 20px;
+        }
+        
+        .app-image .drone-map {
+            width: 90%;
+            height: 90%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="%230a192f"/><path d="M50,50 L350,50 L350,350 L50,350 Z" fill="none" stroke="%2300d9ff" stroke-width="2" stroke-dasharray="10,5"/><circle cx="200" cy="200" r="100" fill="none" stroke="%2300d9ff" stroke-width="2"/><path d="M200,100 L200,300 M100,200 L300,200" stroke="%2300d9ff" stroke-width="2"/><path d="M150,150 L200,200 L250,150" fill="none" stroke="%2300d9ff" stroke-width="2"/></svg>') center no-repeat;
+            background-size: contain;
+            opacity: 0.8;
+        }
+        
+        .app-text {
+            flex: 1;
+        }
+        
+        .app-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .app-text ul {
+            list-style: none;
+            margin-top: 25px;
+        }
+        
+        .app-text ul li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 30px;
+            color: var(--text-secondary);
+        }
+        
+        .app-text ul li:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+        }
+        
+        /* 公司信息部分 */
+        .company-info {
+            background-color: var(--primary-light);
+            text-align: center;
+            position: relative;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .info-card {
+            padding: 40px 30px;
+            background-color: rgba(10, 25, 47, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 217, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .info-icon {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 25px;
+        }
+        
+        .info-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        /* 页脚 */
+        .footer {
+            background-color: #020c1b;
+            padding: 100px 0 40px;
+            position: relative;
+        }
+        
+        .footer:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-logo i {
+            margin-right: 10px;
+        }
+        
+        .footer-logo span {
+            color: var(--text-primary);
+        }
+        
+        .footer-about p {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+        }
+        
+        .footer-links h3, .footer-contact h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-links h3:after, .footer-contact h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links ul li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-contact p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .footer-contact i {
+            color: var(--accent);
+            margin-right: 10px;
+            min-width: 20px;
+            margin-top: 4px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(136, 146, 176, 0.2);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* 动画效果 */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+            100% { opacity: 0.3; }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .app-content {
+                flex-direction: column;
+            }
+            
+            .app-image {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                color: var(--text-primary);
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+            
+            .hero-drone {
+                display: none;
+            }
+            
+            .section {
+                padding: 80px 0;
+            }
+        }
+        
+        /* 语言版本 */
+        .language-version {
+            display: none;
+        }
+        
+        .language-version.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-wind"></i>Wing<span>Wind</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#products">产品</a></li>
+                <li><a href="#applications">商业应用</a></li>
+                <li><a href="#about">关于我们</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="zh">中文</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 中文版本 -->
+    <div id="zh-version" class="language-version active">
+        <!-- 英雄区域 -->
+        <section class="hero" id="home">
+            <div class="container hero-content">
+                <h1>重新定义<span>空中科技</span></h1>
+                <p>WingWind致力于研发高性能无人机解决方案，为工业、农业、物流等行业提供创新飞行平台。探索未来，从天空开始。</p>
+                <div class="hero-btns">
+                    <a href="#products" class="btn btn-primary">探索产品</a>
+                    <a href="#contact" class="btn">联系我们</a>
+                </div>
+            </div>
+            <div class="hero-drone"></div>
+        </section>
+
+        <!-- 产品部分 -->
+        <section class="section products" id="products">
+            <div class="container">
+                <div class="section-header">
+                    <h2>创新产品系列</h2>
+                    <p>我们提供多种专业级无人机解决方案，满足不同行业需求</p>
+                </div>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="drone-icon"></div>
+                        </div>
+                        <div class="product-content">
+                            <h3>SkyScout Pro</h3>
+                            <p>专业级测绘无人机，配备高精度传感器，适用于地形测绘、建筑监测等领域。续航时间达90分钟。</p>
+                            <a href="#" class="btn">了解更多</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="drone-icon"></div>
+                        </div>
+                        <div class="product-content">
+                            <h3>AgriFly X1</h3>
+                            <p>农业专用无人机，具备智能喷洒系统，支持多光谱分析，大幅提升农业生产效率。</p>
+                            <a href="#" class="btn">了解更多</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="drone-icon"></div>
+                        </div>
+                        <div class="product-content">
+                            <h3>LogiDrone V3</h3>
+                            <p>物流运输无人机，载重达15公斤，航程50公里，为城市物流提供全新解决方案。</p>
+                            <a href="#" class="btn">了解更多</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 商业应用部分 -->
+        <section class="section applications" id="applications">
+            <div class="container">
+                <div class="section-header">
+                    <h2>商业应用场景</h2>
+                    <p>我们的无人机技术在多个行业领域创造价值</p>
+                </div>
+                <div class="app-tabs">
+                    <div class="app-tab active">农业应用</div>
+                    <div class="app-tab">物流运输</div>
+                    <div class="app-tab">测绘勘探</div>
+                    <div class="app-tab">安防监控</div>
+                </div>
+                <div class="app-content">
+                    <div class="app-image">
+                        <div class="drone-map"></div>
+                    </div>
+                    <div class="app-text">
+                        <h3>智慧农业解决方案</h3>
+                        <p>通过无人机技术实现农田精准管理，提供作物健康监测、精准喷洒、产量预测等服务，帮助农民提高产量并降低成本。</p>
+                        <ul>
+                            <li>多光谱传感器分析作物健康状况</li>
+                            <li>厘米级精准喷洒系统，减少农药使用量</li>
+                            <li>智能路径规划，提升作业效率</li>
+                            <li>大数据分析平台提供决策支持</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 公司信息部分 -->
+        <section class="section company-info" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2>关于WingWind</h2>
+                    <p>创新驱动，引领无人机技术发展</p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>公司使命</h3>
+                        <p>通过创新无人机技术，解决行业痛点，提升生产效率，创造更安全、高效的工作方式。</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>公司位置</h3>
+                        <p>江苏省苏州市昆山高新区<br>XX科技园创新大道888号</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>专业团队</h3>
+                        <p>由航空工程、人工智能、材料科学等领域专家组成的跨学科研发团队。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="footer" id="contact">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-about">
+                        <div class="footer-logo">
+                            <i class="fas fa-wind"></i>Wing<span>Wind</span>
+                        </div>
+                        <p>我们致力于成为无人机行业的创新领导者，通过尖端技术推动行业发展，为客户提供卓越的飞行解决方案。</p>
+                    </div>
+                    <div class="footer-links">
+                        <h3>快速链接</h3>
+                        <ul>
+                            <li><a href="#home">首页</a></li>
+                            <li><a href="#products">产品中心</a></li>
+                            <li><a href="#applications">解决方案</a></li>
+                            <li><a href="#about">关于我们</a></li>
+                            <li><a href="#contact">联系我们</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-contact">
+                        <h3>联系我们</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> 江苏省苏州市昆山高新区XX科技园创新大道888号</p>
+                        <p><i class="fas fa-phone"></i> +86 512-8888-XXXX</p>
+                        <p><i class="fas fa-envelope"></i> contact@wingwind.com</p>
+                        <p><i class="fas fa-clock"></i> 周一至周五: 9:00 - 18:00</p>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2023 WingWind无人机科技有限公司. 保留所有权利。</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 英文版本 -->
+    <div id="en-version" class="language-version">
+        <!-- 英雄区域 -->
+        <section class="hero" id="home">
+            <div class="container hero-content">
+                <h1>Redefining <span>Aerial Technology</span></h1>
+                <p>WingWind specializes in high-performance drone solutions, providing innovative aerial platforms for industrial, agricultural, and logistics sectors. Explore the future from the sky.</p>
+                <div class="hero-btns">
+                    <a href="#products" class="btn btn-primary">Explore Products</a>
+                    <a href="#contact" class="btn">Contact Us</a>
+                </div>
+            </div>
+            <div class="hero-drone"></div>
+        </section>
+
+        <!-- 产品部分 -->
+        <section class="section products" id="products">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Innovative Products</h2>
+                    <p>We offer a range of professional drone solutions for various industries</p>
+                </div>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="drone-icon"></div>
+                        </div>
+                        <div class="product-content">
+                            <h3>SkyScout Pro</h3>
+                            <p>Professional surveying drone with high-precision sensors for terrain mapping and construction monitoring. 90-minute flight time.</p>
+                            <a href="#" class="btn">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="drone-icon"></div>
+                        </div>
+                        <div class="product-content">
+                            <h3>AgriFly X1</h3>
+                            <p>Agricultural drone with intelligent spraying system and multispectral analysis for enhanced farming efficiency.</p>
+                            <a href="#" class="btn">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image">
+                            <div class="drone-icon"></div>
+                        </div>
+                        <div class="product-content">
+                            <h3>LogiDrone V3</h3>
+                            <p>Logistics drone with 15kg payload capacity and 50km range, revolutionizing urban delivery systems.</p>
+                            <a href="#" class="btn">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 商业应用部分 -->
+        <section class="section applications" id="applications">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Commercial Applications</h2>
+                    <p>Our drone technology creates value across multiple industries</p>
+                </div>
+                <div class="app-tabs">
+                    <div class="app-tab active">Agriculture</div>
+                    <div class="app-tab">Logistics</div>
+                    <div class="app-tab">Surveying</div>
+                    <div class="app-tab">Security</div>
+                </div>
+                <div class="app-content">
+                    <div class="app-image">
+                        <div class="drone-map"></div>
+                    </div>
+                    <div class="app-text">
+                        <h3>Smart Agriculture Solutions</h3>
+                        <p>Precision farm management through drone technology, offering crop health monitoring, targeted spraying, and yield prediction to increase productivity and reduce costs.</p>
+                        <ul>
+                            <li>Multispectral sensors for crop health analysis</li>
+                            <li>Centimeter-precise spraying system</li>
+                            <li>Intelligent path planning for efficiency</li>
+                            <li>Big data analytics for decision support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 公司信息部分 -->
+        <section class="section company-info" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2>About WingWind</h2>
+                    <p>Innovation-driven, leading drone technology development</p>
+                </div>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Our Mission</h3>
+                        <p>Solving industry challenges with innovative drone technology to enhance productivity and create safer, more efficient workflows.</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Location</h3>
+                        <p>No.888 Innovation Avenue<br>XX Technology Park, Kunshan High-Tech Zone<br>Suzhou, Jiangsu Province</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Expert Team</h3>
+                        <p>An interdisciplinary R&D team with experts in aerospace engineering, AI, and materials science.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="footer" id="contact">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-about">
+                        <div class="footer-logo">
+                            <i class="fas fa-wind"></i>Wing<span>Wind</span>
+                        </div>
+                        <p>We strive to be an innovation leader in the drone industry, advancing the field with cutting-edge technology and delivering exceptional aerial solutions.</p>
+                    </div>
+                    <div class="footer-links">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#products">Products</a></li>
+                            <li><a href="#applications">Solutions</a></li>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-contact">
+                        <h3>Contact Us</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> No.888 Innovation Avenue, XX Tech Park, Kunshan, Suzhou</p>
+                        <p><i class="fas fa-phone"></i> +86 512-8888-XXXX</p>
+                        <p><i class="fas fa-envelope"></i> contact@wingwind.com</p>
+                        <p><i class="fas fa-clock"></i> Mon-Fri: 9:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2023 WingWind Drone Technology Co., Ltd. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 语言切换功能
+        const langButtons = document.querySelectorAll('.lang-btn');
+        
+        langButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // 更新按钮状态
+                langButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // 获取目标语言
+                const targetLang = button.dataset.lang;
+                
+                // 隐藏所有语言版本
+                document.querySelectorAll('.language-version').forEach(version => {
+                    version.classList.remove('active');
+                });
+                
+                // 显示目标语言版本
+                document.getElementById(`${targetLang}-version`).classList.add('active');
+            });
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 应用场景切换功能
+        const tabs = document.querySelectorAll('.app-tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // 移除所有标签的active类
+                tabs.forEach(t => t.classList.remove('active'));
+                
+                // 为当前点击的标签添加active类
+                this.classList.add('active');
+                
+                // 获取当前语言
+                const currentLang = document.querySelector('.lang-btn.active').dataset.lang;
+                
+                // 获取应用内容区域
+                const appText = this.closest('.applications').querySelector('.app-text');
+                
+                if (currentLang === 'zh') {
+                    switch(this.textContent) {
+                        case '物流运输':
+                            appText.innerHTML = `
+                                <h3>智能物流解决方案</h3>
+                                <p>革新传统物流模式，提供高效、环保的无人机配送服务，特别适用于紧急医疗物资配送和偏远地区运输。</p>
+                                <ul>
+                                    <li>载重15公斤，航程50公里</li>
+                                    <li>全天候飞行能力</li>
+                                    <li>智能路径规划和避障系统</li>
+                                    <li>实时货物追踪平台</li>
+                                </ul>
+                            `;
+                            break;
+                        case '测绘勘探':
+                            appText.innerHTML = `
+                                <h3>精准测绘解决方案</h3>
+                                <p>专业级测绘无人机，为建筑、矿业、地质勘探等行业提供高精度三维建模和数据分析服务。</p>
+                                <ul>
+                                    <li>厘米级定位精度</li>
+                                    <li>激光雷达与多光谱传感器集成</li>
+                                    <li>自动飞行任务规划</li>
+                                    <li>专业数据处理软件</li>
+                                </ul>
+                            `;
+                            break;
+                        case '安防监控':
+                            appText.innerHTML = `
+                                <h3>安防监控解决方案</h3>
+                                <p>为公共安全、工业设施提供智能空中监控系统，实现大范围、高效率的安防巡查。</p>
+                                <ul>
+                                    <li>高清红外双摄像头</li>
+                                    <li>智能目标识别与追踪</li>
+                                    <li>实时视频传输系统</li>
+                                    <li>紧急响应功能</li>
+                                </ul>
+                            `;
+                            break;
+                        default:
+                            appText.innerHTML = `
+                                <h3>智慧农业解决方案</h3>
+                                <p>通过无人机技术实现农田精准管理，提供作物健康监测、精准喷洒、产量预测等服务，帮助农民提高产量并降低成本。</p>
+                                <ul>
+                                    <li>多光谱传感器分析作物健康状况</li>
+                                    <li>厘米级精准喷洒系统，减少农药使用量</li>
+                                    <li>智能路径规划，提升作业效率</li>
+                                    <li>大数据分析平台提供决策支持</li>
+                                </ul>
+                            `;
+                    }
+                } else {
+                    switch(this.textContent) {
+                        case 'Logistics':
+                            appText.innerHTML = `
+                                <h3>Intelligent Logistics Solutions</h3>
+                                <p>Revolutionizing traditional logistics with efficient, eco-friendly drone delivery services, especially for emergency medical supplies and remote areas.</p>
+                                <ul>
+                                    <li>15kg payload capacity, 50km range</li>
+                                    <li>All-weather flight capability</li>
+                                    <li>Intelligent path planning and obstacle avoidance</li>
+                                    <li>Real-time cargo tracking platform</li>
+                                </ul>
+                            `;
+                            break;
+                        case 'Surveying':
+                            appText.innerHTML = `
+                                <h3>Precision Surveying Solutions</h3>
+                                <p>Professional surveying drones providing high-precision 3D modeling and data analysis for construction, mining, and geological exploration.</p>
+                                <ul>
+                                    <li>Centimeter-level positioning accuracy</li>
+                                    <li>Integrated LiDAR and multispectral sensors</li>
+                                    <li>Automated flight mission planning</li>
+                                    <li>Professional data processing software</li>
+                                </ul>
+                            `;
+                            break;
+                        case 'Security':
+                            appText.innerHTML = `
+                                <h3>Security & Surveillance Solutions</h3>
+                                <p>Intelligent aerial surveillance systems for public safety and industrial facilities, enabling large-scale, efficient security patrols.</p>
+                                <ul>
+                                    <li>HD dual cameras with infrared</li>
+                                    <li>Intelligent target recognition and tracking</li>
+                                    <li>Real-time video transmission system</li>
+                                    <li>Emergency response capabilities</li>
+                                </ul>
+                            `;
+                            break;
+                        default:
+                            appText.innerHTML = `
+                                <h3>Smart Agriculture Solutions</h3>
+                                <p>Precision farm management through drone technology, offering crop health monitoring, targeted spraying, and yield prediction to increase productivity and reduce costs.</p>
+                                <ul>
+                                    <li>Multispectral sensors for crop health analysis</li>
+                                    <li>Centimeter-precise spraying system</li>
+                                    <li>Intelligent path planning for efficiency</li>
+                                    <li>Big data analytics for decision support</li>
+                                </ul>
+                            `;
+                    }
+                }
+            });
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 产品卡片悬停效果增强
+        const productCards = document.querySelectorAll('.product-card');
+        productCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const icon = card.querySelector('.drone-icon');
+                icon.style.transform = 'scale(1.1) rotate(5deg)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                const icon = card.querySelector('.drone-icon');
+                icon.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>
